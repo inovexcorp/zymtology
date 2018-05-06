@@ -1,2 +1,6 @@
 sleep_time_seconds: 1
 temperature_attr: "temperature_f"
+reporting:
+  host: "https://192.168.1.153"
+  port: 8443
+  service: "/mobi/zymtology/reporting"

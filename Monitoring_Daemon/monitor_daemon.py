@@ -12,19 +12,31 @@ from temperusb.temper import TemperHandler, TemperDevice
 
 SLEEP_TIME=1
 TEMPERATURE_ATTR="temperature_f"
+REPORT_HOST=None
+REPORT_PORT=None
+REPORT_SERVICE=None
 
 ## Function to configure the daemon process.
 def configure():
-    global SLEEP_TIME, TEMPERATURE_ATTR
+    global SLEEP_TIME, TEMPERATURE_ATTR, REPORT_HOST, REPORT_PORT, REPORT_SERVICE
     conf_file = sys.argv[1]
     with open(conf_file, 'r') as stream:
         config_yaml = yaml.load(stream)
     SLEEP_TIME = config_yaml["sleep_time_seconds"]
     TEMPERATURE_ATTR = config_yaml["temperature_attr"]
+    if config_yaml.get("reporting"):
+        report = config_yaml["reporting"]
+        REPORT_HOST = report["host"]
+        REPORT_PORT = report["port"]
+        REPORT_SERVICE = report["service"]
 
 def report(reading):
     print reading[TEMPERATURE_ATTR]
-
+    url = REPORT_HOST + ":" + REPORT_PORT + REPORT_SERVICE
+    body = '''{"temperature":''' + str(reading[TEMPERATURE_ATTR]) + '''}'''
+    print "Posting to: " + url
+    print body
+    response = requests.post(url, data=body)
 
 
 
