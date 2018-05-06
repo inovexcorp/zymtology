@@ -1,2 +1,2 @@
-sleep_time_seconds: 60
+sleep_time_seconds: 1
 temperature_attr: "temperature_f"

@@ -7,11 +7,13 @@ import math
 import logging
 import math
 import yaml
+import requests
 from temperusb.temper import TemperHandler, TemperDevice
 
 SLEEP_TIME=1
 TEMPERATURE_ATTR="temperature_f"
 
+## Function to configure the daemon process.
 def configure():
     global SLEEP_TIME, TEMPERATURE_ATTR
     conf_file = sys.argv[1]
@@ -19,6 +21,12 @@ def configure():
         config_yaml = yaml.load(stream)
     SLEEP_TIME = config_yaml["sleep_time_seconds"]
     TEMPERATURE_ATTR = config_yaml["temperature_attr"]
+
+def report(reading):
+    print reading[TEMPERATURE_ATTR]
+    
+
+
 
 ## Configure the daemon process
 configure()
@@ -31,7 +39,7 @@ if len(th.get_devices()) == 1:
     while True:
         temperatures = dev.get_temperatures(sensors=sensors)
         if(temperatures.get(0).get(TEMPERATURE_ATTR)):
-            print temperatures[0][TEMPERATURE_ATTR]
+            report(temperatures[0])
         else:
             raise Exception("Invalid reading!")
         time.sleep(SLEEP_TIME)
