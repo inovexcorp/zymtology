@@ -17,8 +17,8 @@ def configure():
     conf_file = sys.argv[1]
     with open(conf_file, 'r') as stream:
         config_yaml = yaml.load(stream)
-    SLEEP_TIME = if config_yaml.get("sleep_time") config_yaml["sleep_time"]
-    TEMPERATURE_ATT = if config_yaml.get("temperature_attr") config_yaml["temperature_attr"]
+    SLEEP_TIME = config_yaml["sleep_time"]
+    TEMPERATURE_ATT = config_yaml["temperature_attr"]
 
 ## Configure the daemon process
 configure()
