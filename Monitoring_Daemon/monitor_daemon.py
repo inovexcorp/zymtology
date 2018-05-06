@@ -24,7 +24,7 @@ def configure():
 
 def report(reading):
     print reading[TEMPERATURE_ATTR]
-    
+
 
 
 
