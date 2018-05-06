@@ -32,7 +32,7 @@ def configure():
 
 def report(reading):
     print reading[TEMPERATURE_ATTR]
-    url = REPORT_HOST + ":" + REPORT_PORT + REPORT_SERVICE
+    url = REPORT_HOST + ":" + str(REPORT_PORT) + REPORT_SERVICE
     body = '''{"temperature":''' + str(reading[TEMPERATURE_ATTR]) + '''}'''
     print "Posting to: " + url
     print body
